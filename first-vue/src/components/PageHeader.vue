@@ -2,6 +2,7 @@
   <header class="page-header">
     <div class="page-header__container">
       <div class="page-header__logo-wrap">
+        <SvgLogo class="page-header__logo" />
         <h4 class="page-header__logo-text">
           People<span class="page-header__logo-text-red">Live</span>
         </h4>
@@ -17,6 +18,16 @@
     </div>
   </header>
 </template>
+
+<script>
+  import SvgLogo from "@/components/svg/SvgLogo.vue";
+
+  export default {
+    components: {
+      SvgLogo,
+    },
+  };
+</script>
 
 <style lang="less">
   .page-header {

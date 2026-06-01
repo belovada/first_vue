@@ -18,14 +18,14 @@ export default defineConfig({
   server:{
     port:3000
   },
-  css:{
-    preprocessorOptions:{
-      less:{
-        additionalData:`
-        "import @/styles/variables.less";
-        "import @/styles/mixins.less";
-        `
-      }
-    }
-  }
-})
+  css: {
+    preprocessorOptions: {
+      less: {
+        additionalData: `
+              @import "@/styles/variables.less";
+              @import "@/styles/mixins.less";
+            `,
+      },
+    },
+  },
+});
