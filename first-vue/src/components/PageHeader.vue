@@ -11,9 +11,14 @@
       </div>
 
       <nav class="page-header__nav">
-        <button type="button" class="page-header__nav-item" :class="{ 'page-header__nav-item--active': activeTab === 'home' }" v-on:click="setTab('home')">Главная</button>
-        <button type="button" class="page-header__nav-item" :class="{ 'page-header__nav-item--active': activeTab === 'rules' }" @click="setTab('rules')">Правила</button>
-        <button type="button" class="page-header__nav-item" :class="{ 'page-header__nav-item--active': activeTab === 'contacts' }" @click="setTab('contacts')">Контакты</button>
+        <RouterLink
+          v-for="link in links"
+          :key="link.path"
+          class="page-header__nav-item"
+          :to="link.path"
+        >
+          {{ link.title }}
+        </RouterLink>
       </nav>
     </div>
   </header>
@@ -26,17 +31,24 @@
     components: {
       SvgLogo,
     },
-    emits: ["setTab"],
-    props: {
-      activeTab: {
-        type: String,
-        default: "",
-      },
-    },
-    methods: {
-      setTab(value) {
-        this.$emit("setTab", value);
-      },
+
+    data() {
+      return {
+        links: [
+          {
+            title: "Главная",
+            path: "/",
+          },
+          {
+            title: "Правила",
+            path: "/rules",
+          },
+          {
+            title: "Контакты",
+            path: "/contacts",
+          },
+        ],
+      };
     },
   };
 </script>
