@@ -15,7 +15,7 @@
           v-for="link in links"
           :key="link.path"
           class="page-header__nav-item"
-          :to="link.path"
+          :to="{path: link.path, query: link.query}"
         >
           {{ link.title }}
         </RouterLink>
@@ -46,6 +46,11 @@
           {
             title: "Контакты",
             path: "/contacts",
+            query:{
+                address:"г. Томск, ул. Красноармейская, 146",
+                email:"idat@tusur.ru",
+                phone:"(3822) 90-72-56"
+            }
           },
         ],
       };
