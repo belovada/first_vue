@@ -18,6 +18,11 @@ const routes = [
     name: "rules",
     component: () => import("@/pages/rules.vue"),
   },
+  {
+    path: "/blog/:id",
+    name: "blogArticle",
+    component: () => import("@/pages/blog/[id].vue"),
+  },
 ];
 
 const router = createRouter({
