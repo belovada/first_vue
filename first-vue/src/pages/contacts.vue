@@ -17,17 +17,27 @@
         Email:
         <span class="page-contacts__text-italic"> {{query.email ||"idat@tusur.ru"}} </span>
       </p>
+      <p class="page-contacts__text">
+        Контактное лицо:
+        <span class="page-contacts__text-italic">
+          {{ userStore.fullName }}
+        </span>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapStores } from "pinia";
+  import { useUserStore } from "@/store/user";
+
   export default {
     computed:{
+      ...mapStores(useUserStore),
       query(){
         return this.$route.query
       }
-    }
+    },
   };
 </script>
 
