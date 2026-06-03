@@ -2,6 +2,7 @@
   <main class="list-articles">
     <div class="list-articles__container">
       <div class="list-articles__list">
+        <SearchForm class="list-articles__search-form" @search="onSearch" />
         <CardArticle
           v-for="item in newsList"
           :key="item.id"
@@ -22,11 +23,13 @@
 </template>
 
 <script>
+  import SearchForm from "@/components/SearchForm.vue";
   import CardArticle from "@/components/card/CardArticle.vue";
   import ThePaginator from "@/components/ThePaginator.vue";
 
   export default {
     components: {
+      SearchForm,
       CardArticle,
       ThePaginator,
     },
@@ -37,15 +40,24 @@
         page: 1,
         totalCount: 1,
         totalPages: 1,
+        search: "",
       };
     },
     methods: {
       getNewsList(page = 1) {
-        this.$axios("https://dummyjson.com/posts", {
-          params: {
-            limit: this.limit,
-            skip: this.limit * (page - 1),
-          },
+        const params = {
+          limit: this.limit,
+          skip: this.limit * (page - 1),
+        };
+
+        if (this.search) params.q = this.search;
+
+        const url = this.search
+          ? "https://dummyjson.com/posts/search"
+          : "https://dummyjson.com/posts";
+
+        this.$axios(url, {
+          params: params,
         }).then((response) => {
           if (response?.data?.posts) {
             this.newsList = response.data.posts;
@@ -58,8 +70,17 @@
       setPage(page) {
         this.getNewsList(page);
       },
+      onSearch(search) {
+        this.$router
+          .push({ query: search ? { search: search } : {} })
+          .then(() => {
+            this.search = this.$route.query.search;
+            this.getNewsList();
+          });
+      },
     },
     created() {
+      if (this.$route.query.search) this.search = this.$route.query.search;
       this.getNewsList();
     },
   };
@@ -72,6 +93,9 @@
     }
     &__card {
       margin-bottom: 15px;
+    }
+    &__search-form {
+      margin-bottom: 30px;
     }
   }
 </style>
